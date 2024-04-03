@@ -3,39 +3,39 @@ import sequelize from "../../db/config.js";
 
 const JobModel = sequelize.define("Jobs",{
     jobtile: {
-        type: DataTypes.STRING(50),
+        type: DataTypes.STRING(),
         allowNull: false
     },
     company: {
-        type: DataTypes.STRING(50),
+        type: DataTypes.STRING(),
         allowNull: false
     },
     location: {
-        type: DataTypes.STRING(50),
+        type: DataTypes.STRING(),
         allowNull: false
     },
     jobType: {
-        type: DataTypes.STRING(50),
+        type: DataTypes.STRING(),
         allowNull: false
     },
     industry: {
-        type: DataTypes.STRING(50),
+        type: DataTypes.STRING(),
         allowNull: false
     },
     experienceRequired: {
-        type: DataTypes.STRING(50),
+        type: DataTypes.STRING(),
         allowNull: false
     },
     educationRequired: {
-        type: DataTypes.STRING(50),
+        type: DataTypes.STRING(),
         allowNull: false
     },
     companyDescription: {
-        type: DataTypes.STRING(1000),
-        allowNull: true
+        type: DataTypes.STRING(),
+        allowNull: false
     },
     jobDescription: {
-        type: DataTypes.JSONB,
+        type: DataTypes.STRING(),
         allowNull: false
     }
 },{
