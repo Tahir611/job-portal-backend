@@ -39,7 +39,7 @@ const JobModel = sequelize.define("Jobs",{
         allowNull: false
     }
 },{
-    timestamps: true
+    timestamps: true,
 });
 
 export default JobModel;
