@@ -26,9 +26,7 @@ const EmployerValidation = {
         minDomainSegments: 2,
         tlds: { allow: ["com", "net"] },
       }),
-      password: Joi.string()
-        .pattern(new RegExp("^[a-zA-Z0-9]{3,30}$"))
-        .required(),
+      password: Joi.string().min(3).max(50).required(),
     });
     const response = schema.validate(req.body);
     if (response.error) {

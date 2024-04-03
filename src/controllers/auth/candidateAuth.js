@@ -7,7 +7,7 @@ const CandidateAuthController = {
   login: async (req, res) => {
     try {
       const { email, password } = req.body;
-      const candidate = await CandidateAuthModel.findOne({ email, password });
+      const candidate = await CandidateAuthModel.findOne({where: { email }});
       if (!candidate) {
         return res.status(404).json({
           messageType: "Error",
@@ -26,11 +26,13 @@ const CandidateAuthController = {
 
       const id = candidate.id;
       const response = Jwt.sign(
-        { id, email, password, userName },
+        { id, email, password, userName: candidate.userName },
         process.env.JWT_SIGNATURE,
         { expiresIn: "40m" }
       );
-      response.error && res.json({error: response.error});
+      if(response.error) {
+        return res.json({error: response.error});
+      }
       res.json({
         messageType: "Success",
         message: "Login Successfully",
@@ -52,11 +54,13 @@ const CandidateAuthController = {
         const alreadyExist = await CandidateAuthModel.findOne({
             where: {email: payload.email}
         });
-        alreadyExist && res.json({
+        if(alreadyExist) {
+          return res.json({
             message: "This email already exists"
         });
+        }
 
-        const candidate = CandidateAuthModel.create({
+        const candidate = await CandidateAuthModel.create({
             name: payload.name,
             userName: payload.userName,
             email: payload.email,

@@ -43,8 +43,8 @@ const JobController = {
         companyDescription,
         jobDescription,
       } = req.body;
-      //   const employerId = req.employer.id;
-      //   console.log("EMPLOYER_ID", employerId);
+        // const employerId = req.employer?.id;
+        // console.log("EMPLOYER_ID", employerId && employerId);
       const job = await JobModel.create({
         jobTitle,
         company,

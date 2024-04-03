@@ -4,8 +4,8 @@ import CandidateAuthController from "../../controllers/auth/candidateAuth.js";
 
 const CandAuthRoute = Router();
 
-CandAuthRoute.post("/login", CandidateValidation.login, CandidateAuthController.login);
-CandAuthRoute.post("/register", CandidateValidation.register, CandidateAuthController.register);
-CandAuthRoute.post("/logout", CandidateAuthController.logout);
+CandAuthRoute.post("/c-login", CandidateValidation.login, CandidateAuthController.login);
+CandAuthRoute.post("/c-signup", CandidateValidation.register, CandidateAuthController.register);
+CandAuthRoute.post("/c-logout", CandidateAuthController.logout);
 
 export default CandAuthRoute;

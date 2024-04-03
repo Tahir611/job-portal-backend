@@ -7,7 +7,7 @@ const EmployerAuthController = {
   login: async (req, res) => {
     try {
       const { email, password } = req.body;
-      const employer = await EmployerAuthModel.findOne({ email, password });
+      const employer = await EmployerAuthModel.findOne({ where: { email } });
       if (!employer) {
         return res.status(404).json({
           messageType: "Error",
@@ -18,7 +18,7 @@ const EmployerAuthController = {
       const result = await bcrypt.compare(password, employer.password);
 
       if (!result) {
-        res.status(401).json({
+        return res.status(401).json({
           messageType: "Error",
           message: "Invalid Credentials",
         });
@@ -26,11 +26,13 @@ const EmployerAuthController = {
 
       const id = employer.id;
       const response = Jwt.sign(
-        { id, email, password, userName },
+        { id, email, password, userName: employer.userName },
         process.env.JWT_SIGNATURE,
         { expiresIn: "40m" }
       );
-      response.error && res.json({error: response.error});
+      if(response.error) {
+        return  res.json({error: response.error});
+      }
       res.json({
         messageType: "Success",
         message: "Login successfully",
@@ -44,22 +46,23 @@ const EmployerAuthController = {
     }
   },
   register: async (req, res) => {
-
     try {
-        const payload = req.body;
+        const {name, userName, email, password} = req.body;
         const saltRounds = 10;
-        const hPassword = await bcrypt.hash(payload.password, saltRounds);
-        const alreadyExist = await EmployerAuthModel.findOne({
-            where: {email: payload.email}
+        const hPassword = await bcrypt.hash(password, saltRounds);
+        const employerAlreadyExist = await EmployerAuthModel.findOne({
+            where: {email}
         });
-        alreadyExist && res.json({
+        if(employerAlreadyExist) {
+          return res.json({
             message: "This email already exists"
-        });
+          })
+        }
 
-        const employer = EmployerAuthModel.create({
-            name: payload.name,
-            userName: payload.userName,
-            email: payload.email,
+        const employer = await EmployerAuthModel.create({
+            name,
+            userName,
+            email,
             password: hPassword
         });
         res.json({

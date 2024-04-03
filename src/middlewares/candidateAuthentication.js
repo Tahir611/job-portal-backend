@@ -3,7 +3,7 @@ import { BLACKLIST } from "../controllers/auth/candidateAuth.js";
 
 const CandidiateAuthenticateMiddleware = (req, res, next) => {
     const headers = req.headers;
-    let token = headers.auhtorization;
+    let token = headers.authorization;
     token = token.split(" ");
     console.log("TOKEN",token);
     token = token[1];

@@ -3,7 +3,9 @@ import { BLACKLIST } from "../controllers/auth/employerAuth.js";
 
 const EmployerAuthenticateMiddleware = (req, res, next) => {
     const headers = req.headers;
-    let token = headers.auhtorization;
+    console.log(headers);
+    let token = headers.authorization;
+    console.log(token);
     token = token.split(" ");
     console.log("TOKEN",token);
     token = token[1];

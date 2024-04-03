@@ -1,5 +1,6 @@
 import { DataTypes } from "sequelize";
 import sequelize from "../../db/config.js";
+import EmployerAuthModel from "../auth/employerAuthModel.js";
 
 const JobModel = sequelize.define("Jobs",{
     jobTitle: {
@@ -41,5 +42,7 @@ const JobModel = sequelize.define("Jobs",{
 },{
     timestamps: true,
 });
+JobModel.belongsTo(EmployerAuthModel);
+EmployerAuthModel.hasMany(JobModel);
 
 export default JobModel;
