@@ -16,11 +16,19 @@ const JobController = {
       });
     }
   },
-  getSingleJob: (req, res) => {
-    res.json({
-      messageType: "Success",
-      message: "Got single successfully",
-    });
+  getSingleJob: async (req, res) => {
+    try {
+      const params = req.params;
+      console.log("PARAMS",params)
+      const job = await JobModel.findByPk(params.jobId);
+      res.json({
+        messageType: "Success",
+        message: "Got single successfully",
+        job,
+      });
+    } catch (error) {
+        console.log("ERROR",error);
+    }
   },
   createJob: async (req, res) => {
     try {
@@ -35,8 +43,8 @@ const JobController = {
         companyDescription,
         jobDescription,
       } = req.body;
-    //   const employerId = req.employer.id;
-    //   console.log("EMPLOYER_ID", employerId);
+      //   const employerId = req.employer.id;
+      //   console.log("EMPLOYER_ID", employerId);
       const job = await JobModel.create({
         jobTitle,
         company,
@@ -47,13 +55,13 @@ const JobController = {
         educationRequired,
         companyDescription,
         jobDescription,
-        // EmployerId: employerId 
+        // EmployerId: employerId
       });
       res.json({
         messageType: "Success",
         message: "Job created successfully",
-        job
-      })
+        job,
+      });
     } catch (error) {
       console.log("ERROR", error);
       res.status(500).json({
@@ -61,13 +69,61 @@ const JobController = {
       });
     }
   },
-  updateJob: (req, res) => {
-    res.json({
-      messageType: "Success",
-      message: "Job updated successfully",
-    });
+  updateJob: async (req, res) => {
+    try {
+      const {
+        jobTitle,
+        company,
+        location,
+        jobType,
+        industry,
+        experienceRequired,
+        educationRequired,
+        companyDescription,
+        jobDescription,
+      } = req.body;
+      const params = req.params;
+      const job = await JobModel.findByPk(params.jobId);
+      if (!job) {
+        res.status(404).json({
+          messageType: "Error",
+          message: "Job Not Found",
+        });
+      }
+      job.jobTitle = jobTitle;
+      job.company = company;
+      job.location = location;
+      job.jobType = jobType;
+      job.industry = industry;
+      job.experienceRequired = experienceRequired;
+      job.educationRequired = educationRequired;
+      job.companyDescription = companyDescription;
+      job.jobDescription = jobDescription;
+
+      await job.save();
+
+      res.json({
+        messageType: "Success",
+        message: "Job updated successfully",
+        job,
+      });
+    } catch (error) {
+      console.log("ERROR", error);
+      res.status(500).json({
+        message: "Internal server error",
+      });
+    }
   },
-  deleteJob: (req, res) => {
+  deleteJob: async (req, res) => {
+    const params = req.params;
+    const job = await JobModel.findByPk(params.jobId);
+    if (!job) {
+      res.status(404).json({
+        messageType: "Error",
+        message: "Job not found",
+      });
+    }
+    await job.destroy();
     res.json({
       messageType: "Success",
       message: "Job deleted successfully",
