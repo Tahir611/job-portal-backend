@@ -2,7 +2,7 @@ import { DataTypes } from "sequelize";
 import sequelize from "../../db/config.js";
 
 const JobModel = sequelize.define("Jobs",{
-    jobtile: {
+    jobTitle: {
         type: DataTypes.STRING(),
         allowNull: false
     },
