@@ -13,7 +13,7 @@ const dbInit = async () => {
     });
     await EmployerAuthModel.sync({
         alter: true,
-        force: false
+        force: true
     })
 }
 
