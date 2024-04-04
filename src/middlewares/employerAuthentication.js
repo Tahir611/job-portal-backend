@@ -5,7 +5,7 @@ const EmployerAuthenticateMiddleware = (req, res, next) => {
     const headers = req.headers;
     console.log(headers);
     let token = headers.authorization;
-    console.log(token);
+    console.log("TOKEN",token);
     token = token.split(" ");
     console.log("TOKEN",token);
     token = token[1];

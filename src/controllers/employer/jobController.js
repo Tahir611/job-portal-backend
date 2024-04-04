@@ -43,8 +43,8 @@ const JobController = {
         companyDescription,
         jobDescription,
       } = req.body;
-        // const employerId = req.employer?.id;
-        // console.log("EMPLOYER_ID", employerId && employerId);
+        const employerId = req.employer.id;
+        console.log("EMPLOYER_ID", employerId && employerId);
       const job = await JobModel.create({
         jobTitle,
         company,
@@ -55,7 +55,7 @@ const JobController = {
         educationRequired,
         companyDescription,
         jobDescription,
-        // EmployerId: employerId
+        EmployerId: employerId
       });
       res.json({
         messageType: "Success",
@@ -82,6 +82,7 @@ const JobController = {
         companyDescription,
         jobDescription,
       } = req.body;
+
       const params = req.params;
       const job = await JobModel.findByPk(params.jobId);
       if (!job) {
@@ -129,6 +130,44 @@ const JobController = {
       message: "Job deleted successfully",
     });
   },
+
+  getSpecificEmployerJob: async (req, res) => {
+    try {
+        const id = req.employer.id; 
+        const jobs = await JobModel.findAll({where: {EmployerId: id}} );
+        res.json({
+            messageType: "Success",
+            message: "Got all jobs of an employer successfully",
+            jobs
+        })
+    } catch (error) {
+        console.log("ERROR",error);
+        res.json({
+            messageType: "Error",
+            message: "Internal Server Error",
+            error,
+        })
+    }
+  },
+
+  getAppliedJobOfUser: async (req, res) => {
+    try {
+        const id = req.candidate.id; 
+        const jobs = await JobModel.findAll({where: {CandidateId: id}} );
+        res.json({
+            messageType: "Success",
+            message: "Got all jobs of an employer successfully",
+            jobs
+        })
+    } catch (error) {
+        console.log("ERROR",error);
+        res.json({
+            messageType: "Error",
+            message: "Internal Server Error",
+            error,
+        })
+    }
+  }
 };
 
 export default JobController;

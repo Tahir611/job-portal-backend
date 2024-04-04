@@ -28,7 +28,7 @@ const EmployerAuthController = {
       const response = Jwt.sign(
         { id, email, password, userName: employer.userName },
         process.env.JWT_SIGNATURE,
-        { expiresIn: "40m" }
+        { expiresIn: "6h" }
       );
       if(response.error) {
         return  res.json({error: response.error});

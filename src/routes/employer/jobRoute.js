@@ -11,5 +11,6 @@ jobRouter.get("/get-job/:jobId" , jobController.getSingleJob);
 jobRouter.post("/create-job", EmployerAuthenticateMiddleware, JobValidator.create, jobController.createJob);
 jobRouter.put("/update-job/:jobId", EmployerAuthenticateMiddleware, JobValidator.update, jobController.updateJob);
 jobRouter.delete("/delete-job/:jobId", EmployerAuthenticateMiddleware, jobController.deleteJob);
+jobRouter.get("/get-job-of-employer", EmployerAuthenticateMiddleware, jobController.getSpecificEmployerJob )
 
 export default jobRouter;

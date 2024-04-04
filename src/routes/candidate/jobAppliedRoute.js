@@ -8,5 +8,6 @@ import JobAppliedController from "../../controllers/candidate/jobAppliedControll
 const jobAppliedRoute = Router();
 
 jobAppliedRoute.post("/apply-job/:jobId",CandidiateAuthenticateMiddleware, JobAppliedController.applyJob);
+jobAppliedRoute.get("/get-applied-job-of-specific-user", CandidiateAuthenticateMiddleware, JobAppliedController.getAppliedJobOfUser)
 
 export default jobAppliedRoute;

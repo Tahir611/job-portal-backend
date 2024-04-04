@@ -32,11 +32,11 @@ const JobModel = sequelize.define("Jobs",{
         allowNull: false
     },
     companyDescription: {
-        type: DataTypes.STRING(),
+        type: DataTypes.STRING(2200),
         allowNull: false
     },
     jobDescription: {
-        type: DataTypes.STRING(),
+        type: DataTypes.STRING(2200),
         allowNull: false
     }
 },{

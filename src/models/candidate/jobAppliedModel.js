@@ -18,6 +18,7 @@ const JobAppliedModel = sequelize.define("JobApplied",{
 });
 JobAppliedModel.belongsTo(CandidateAuthModel);
 CandidateAuthModel.hasMany(JobAppliedModel);
+
 JobAppliedModel.belongsTo(JobModel);
 JobModel.hasMany(JobAppliedModel);
 

@@ -1,4 +1,5 @@
 import JobAppliedModel from "../../models/candidate/jobAppliedModel.js";
+import JobModel from "../../models/employer/jobModel.js";
 
 const JobAppliedController = {
     applyJob:async(req,res)=>{
@@ -18,6 +19,25 @@ const JobAppliedController = {
                 message: "Internal Server Error"
             });
         }
-    }
+    },
+
+    getAppliedJobOfUser: async (req, res) => {
+        try {
+            const id = req.candidate.id; 
+            const jobs = await JobAppliedModel.findAll({where: {CandidateId: id}, include: [JobModel]} );
+            res.json({
+                messageType: "Success",
+                message: "Got all applied jobs of a user successfully",
+                jobs
+            })
+        } catch (error) {
+            console.log("ERROR",error);
+            res.json({
+                messageType: "Error",
+                message: "Internal Server Error",
+                error,
+            })
+        }
+      }
 }
 export default JobAppliedController
