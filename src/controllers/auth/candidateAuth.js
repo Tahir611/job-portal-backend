@@ -18,7 +18,7 @@ const CandidateAuthController = {
       const result = await bcrypt.compare(password, candidate.password);
 
       if (!result) {
-        res.status(401).json({
+        return res.status(401).json({
           messageType: "Error",
           message: "Invalid Credentials",
         });
@@ -33,7 +33,7 @@ const CandidateAuthController = {
       if(response.error) {
         return res.json({error: response.error});
       }
-      res.json({
+      return res.json({
         messageType: "Success",
         message: "Login Successfully",
         response
@@ -66,7 +66,7 @@ const CandidateAuthController = {
             email: payload.email,
             password: hPassword
         });
-        res.json({
+        return res.json({
             messageType: "Success",
             message: "Candidate created Successfully",
             candidate
@@ -74,7 +74,7 @@ const CandidateAuthController = {
 
     } catch (error) {
         console.log("ERROR",error);
-        res.status(500).json({
+        return res.status(500).json({
             message: "Internal server error"
         })
     }
@@ -84,7 +84,7 @@ const CandidateAuthController = {
         const token = req.headers.authorization.split(" ")[1];
         if(token) {
             BLACKLIST.add(token);
-            res.json({
+            return res.json({
                 message: "Token revoked"
             });
         } else {
@@ -94,7 +94,7 @@ const CandidateAuthController = {
         }
     } catch (error) {
         console.log("ERROR",error);
-        res.status(500).json({
+        return res.status(500).json({
             message: "Internal Server Error"
         });
     }

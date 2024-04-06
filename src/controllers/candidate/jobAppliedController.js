@@ -6,11 +6,13 @@ const JobAppliedController = {
         try {
 
             const {jobId} = req.params;
+            // const {resume} = req.body;
+            const resume = req.file ? req.file.path : null
             const application = await JobAppliedModel.findOne({where:{JobId:jobId,CandidateId:req.candidate.id}})
             if(application){
                 return res.json({message:"Already Applied for this job"})
             }
-            await JobAppliedModel.create({JobId:jobId,CandidateId:req.candidate.id,applicationStatus:"applied"})
+            await JobAppliedModel.create({JobId:jobId,CandidateId:req.candidate.id,applicationStatus:"applied", resume})
             
             return res.json({message:`Candidate with id ${req.candidate.id} Applied for the job with id ${jobId} sucessfully`})
         } catch (error) {

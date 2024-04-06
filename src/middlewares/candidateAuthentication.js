@@ -5,7 +5,7 @@ const CandidiateAuthenticateMiddleware = (req, res, next) => {
     const headers = req.headers;
     let token = headers.authorization;
     token = token.split(" ");
-    console.log("TOKEN",token);
+    // console.log("TOKEN",token);
     token = token[1];
     if(!token) {
         res.status(401).json({
@@ -19,7 +19,7 @@ const CandidiateAuthenticateMiddleware = (req, res, next) => {
     };
     try {
         const candidateData = Jwt.verify(token, process.env.JWT_SIGNATURE);
-        console.log("DECODE",candidateData);
+        // console.log("DECODE",candidateData);
         req.candidate = candidateData;
     } catch (error) {
         console.log("ERROR",error);

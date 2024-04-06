@@ -148,25 +148,6 @@ const JobController = {
             error,
         })
     }
-  },
-
-  getAppliedJobOfUser: async (req, res) => {
-    try {
-        const id = req.candidate.id; 
-        const jobs = await JobModel.findAll({where: {CandidateId: id}} );
-        res.json({
-            messageType: "Success",
-            message: "Got all jobs of an employer successfully",
-            jobs
-        })
-    } catch (error) {
-        console.log("ERROR",error);
-        res.json({
-            messageType: "Error",
-            message: "Internal Server Error",
-            error,
-        })
-    }
   }
 };
 

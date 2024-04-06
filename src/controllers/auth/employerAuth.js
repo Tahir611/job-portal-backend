@@ -33,7 +33,7 @@ const EmployerAuthController = {
       if(response.error) {
         return  res.json({error: response.error});
       }
-      res.json({
+      return res.json({
         messageType: "Success",
         message: "Login successfully",
         response
@@ -65,7 +65,7 @@ const EmployerAuthController = {
             email,
             password: hPassword
         });
-        res.json({
+        return res.json({
             messageType: "Success",
             message: "Employer created Successfully",
             employer
@@ -73,7 +73,7 @@ const EmployerAuthController = {
 
     } catch (error) {
         console.log("ERROR",error);
-        res.status(500).json({
+        return res.status(500).json({
             message: "Internal server error"
         })
     }
@@ -83,17 +83,17 @@ const EmployerAuthController = {
         const token = req.headers.authorization.split(" ")[1];
         if(token) {
             BLACKLIST.add(token);
-            res.json({
+            return res.json({
                 message: "Token revoked"
             });
         } else {
-            res.status(400).json({
+            return res.status(400).json({
                 message: "Token Not Provided"
             })
         }
     } catch (error) {
         console.log("ERROR",error);
-        res.status(500).json({
+        return res.status(500).json({
             message: "Internal Server Error"
         });
     }
