@@ -26,7 +26,7 @@ const CandidateAuthController = {
 
       const id = candidate.id;
       const response = Jwt.sign(
-        { id, email, password, userName: candidate.userName },
+        { id, email, password: candidate.password, userName: candidate.userName },
         process.env.JWT_SIGNATURE,
         { expiresIn: "40m" }
       );

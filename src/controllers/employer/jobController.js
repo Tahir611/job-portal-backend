@@ -4,7 +4,7 @@ const JobController = {
   getAllJobs: async (req, res) => {
     try {
       const jobs = await JobModel.findAll();
-      res.json({
+      return res.json({
         messageType: "Success",
         message: "Got all jobs successfully",
         jobs,
@@ -21,7 +21,7 @@ const JobController = {
       const params = req.params;
       console.log("PARAMS",params)
       const job = await JobModel.findByPk(params.jobId);
-      res.json({
+      return res.json({
         messageType: "Success",
         message: "Got single successfully",
         job,
@@ -57,7 +57,7 @@ const JobController = {
         jobDescription,
         EmployerId: employerId
       });
-      res.json({
+      return res.json({
         messageType: "Success",
         message: "Job created successfully",
         job,
@@ -103,7 +103,7 @@ const JobController = {
 
       await job.save();
 
-      res.json({
+      return res.json({
         messageType: "Success",
         message: "Job updated successfully",
         job,
@@ -125,7 +125,7 @@ const JobController = {
       });
     }
     await job.destroy();
-    res.json({
+    return res.json({
       messageType: "Success",
       message: "Job deleted successfully",
     });
@@ -133,16 +133,17 @@ const JobController = {
 
   getSpecificEmployerJob: async (req, res) => {
     try {
-        const id = req.employer.id; 
+        const id = req.employer.id;
+        // console.log("token employer id", req)
         const jobs = await JobModel.findAll({where: {EmployerId: id}} );
-        res.json({
+        return res.json({
             messageType: "Success",
             message: "Got all jobs of an employer successfully",
             jobs
         })
     } catch (error) {
         console.log("ERROR",error);
-        res.json({
+        return res.json({
             messageType: "Error",
             message: "Internal Server Error",
             error,

@@ -34,6 +34,7 @@ const EmployerAuthController = {
         return  res.json({error: response.error});
       }
       return res.json({
+        role: "Employer",
         messageType: "Success",
         message: "Login successfully",
         response
@@ -66,6 +67,7 @@ const EmployerAuthController = {
             password: hPassword
         });
         return res.json({
+            role: "Employer",
             messageType: "Success",
             message: "Employer created Successfully",
             employer

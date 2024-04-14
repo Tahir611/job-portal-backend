@@ -3,7 +3,7 @@ import EmployerAuthModel from "../../models/auth/employerAuthModel.js";
 const EmployerController = {
   getAllEmployers: (req, res) => {
     try {
-      res.json({
+      return res.json({
         messageType: "Success",
         message: "Got All Employers",
       });
@@ -16,7 +16,7 @@ const EmployerController = {
   },
   getSingleEmployer: (req, res) => {
     try {
-      res.json({
+      return res.json({
         messageType: "Success",
         message: "Got Single Employers",
       });
@@ -29,7 +29,7 @@ const EmployerController = {
   },
   updaetEmployers: (req, res) => {
     try {
-      res.json({
+      return res.json({
         messageType: "Success",
         message: "Employer Upadetd Successfully",
       });
@@ -51,7 +51,7 @@ const EmployerController = {
         });
       }
       await employer.destroy();
-      res.json({
+      return res.json({
         messageType: "Success",
         message: "Employer Deleted Successfully",
       });
