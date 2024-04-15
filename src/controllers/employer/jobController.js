@@ -64,7 +64,7 @@ const JobController = {
       });
     } catch (error) {
       console.log("ERROR", error);
-      res.status(500).json({
+      return res.status(500).json({
         message: "Internal server error",
       });
     }
@@ -86,7 +86,7 @@ const JobController = {
       const params = req.params;
       const job = await JobModel.findByPk(params.jobId);
       if (!job) {
-        res.status(404).json({
+        return res.status(404).json({
           messageType: "Error",
           message: "Job Not Found",
         });
@@ -110,7 +110,7 @@ const JobController = {
       });
     } catch (error) {
       console.log("ERROR", error);
-      res.status(500).json({
+      return res.status(500).json({
         message: "Internal server error",
       });
     }
@@ -119,7 +119,7 @@ const JobController = {
     const params = req.params;
     const job = await JobModel.findByPk(params.jobId);
     if (!job) {
-      res.status(404).json({
+      return res.status(404).json({
         messageType: "Error",
         message: "Job not found",
       });
@@ -134,7 +134,7 @@ const JobController = {
   getSpecificEmployerJob: async (req, res) => {
     try {
         const id = req.employer.id;
-        // console.log("token employer id", req)
+        console.log("token employer id", req.employer)
         const jobs = await JobModel.findAll({where: {EmployerId: id}} );
         return res.json({
             messageType: "Success",
